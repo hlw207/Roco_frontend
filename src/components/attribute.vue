@@ -17,7 +17,7 @@ const changeAttribute = () =>{
 <template>
   <div class="attribute" :class="{attribute_choice: bpInfo.nowAttribute == props.attribute}" @click="changeAttribute">
     <div style="display: flex;justify-content: center;align-items: center;height: 50px">
-      <el-image :src="url" style="height: 38px"></el-image>
+      <img :src="url" style="height: 38px">
     </div>
     <div style="display: flex;justify-content: center;align-items: center;height: 16px;font-size: 13px">
       {{props.attribute}}

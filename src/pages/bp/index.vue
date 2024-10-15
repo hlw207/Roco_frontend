@@ -52,8 +52,7 @@ onMounted(()=>{
 </script>
 
 <template>
-  <el-image :src="url" class="picture">
-  </el-image>
+  <img :src="url" class="picture" />
   <div class="main">
     <div style="height: 100px;display: flex;align-items: center;justify-content: center">
       <div style="display: flex;width: 50%;justify-content: left;margin-left: 30px;align-items: center" v-if="bpInfo.nowRound != 0">
@@ -61,8 +60,7 @@ onMounted(()=>{
           <Ban color="blue" :show="false" :ban-round="bpInfo.nowRound" :genie-name="ban.genieName" :attribute="ban.attribute" :can-delete="true" :order="index"/>
         </template>
       </div>
-      <el-image :src="urlLogo" style="height: 100px">
-      </el-image>
+      <img :src="urlLogo" style="height: 100px" />
       <div style="display: flex;width: 50%;;justify-content: right;margin-right: 30px;align-items: center" v-if="bpInfo.nowRound != 0">
         <template v-for="(ban,index) in bpInfo.playerChoice[bpInfo.nowRound - 1][1]">
           <Ban color="red" :show="false" :ban-round="bpInfo.nowRound" :genie-name="ban.genieName" :attribute="ban.attribute" :can-delete="true" :order="index"/>
@@ -72,7 +70,7 @@ onMounted(()=>{
     <div style="display: flex;flex: 1;">
       <div style="width: 20%;background: rgba(127,255,0,0.1);display: flex;flex-direction: column;align-items: center;padding-top: 15px">
         <div style="font-weight: bold;font-size: 25px;color: #d9cbcb;margin-bottom: 10px;margin-top: 8px;display: flex;align-items: center">
-          <el-image :src="urlB" style="width: 40px;margin-right: 15px"></el-image>
+          <img :src="urlB" style="width: 40px;margin-right: 15px" />
           蓝方阵容
         </div>
         <template v-for="(genie, index) in bpInfo.playerChoice[bpInfo.nowRound - 1][2]" v-if="bpInfo.nowRound > 0">
@@ -93,7 +91,7 @@ onMounted(()=>{
           <el-scrollbar :height="scrollerWidth * 0.44 + 60" style="width: 100%">
             <div style="height: 100%;display: flex;flex-wrap: wrap;">
               <div style="width: 100%;margin-left: 8px;display: flex;align-items: center;font-size: 22px;font-weight: bold;color: #d9cbcb;margin-bottom: 5px;margin-top: 0px">
-                <el-image :src="attrPic" style="height: 30px;margin-right: 5px"></el-image>
+                <img :src="attrPic" style="height: 30px;margin-right: 5px" />
                 S级：
                 <Round />
               </div>
@@ -102,7 +100,7 @@ onMounted(()=>{
               </template>
 
               <div style="width: 100%;margin-left: 8px;display: flex;align-items: center;font-size: 22px;font-weight: bold;color: #d9cbcb;margin-bottom: 5px;margin-top: 5px">
-                <el-image :src="attrPic" style="height: 30px;margin-right: 5px"></el-image>
+                <img :src="attrPic" style="height: 30px;margin-right: 5px" />
                 A级：
               </div>
               <template v-for="(genie, index) in bpInfo.genie[1]">
@@ -110,7 +108,7 @@ onMounted(()=>{
               </template>
 
               <div style="width: 100%;margin-left: 8px;display: flex;align-items: center;font-size: 22px;font-weight: bold;color: #d9cbcb;margin-bottom: 5px;margin-top: 5px">
-                <el-image :src="attrPic" style="height: 30px;margin-right: 5px"></el-image>
+                <img :src="attrPic" style="height: 30px;margin-right: 5px" />
                 B级：
               </div>
               <template v-for="(genie, index) in bpInfo.genie[2]">
@@ -118,7 +116,7 @@ onMounted(()=>{
               </template>
 
               <div style="width: 100%;margin-left: 8px;display: flex;align-items: center;font-size: 22px;font-weight: bold;color: #d9cbcb;margin-bottom: 5px;margin-top: 5px">
-                <el-image :src="attrPic" style="height: 30px;margin-right: 5px"></el-image>
+                <img :src="attrPic" style="height: 30px;margin-right: 5px" />
                 C级：
               </div>
               <template v-for="(genie, index) in  bpInfo.genie[3]">
