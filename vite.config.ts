@@ -16,12 +16,12 @@ export default defineConfig({
       dirs: 'src/pages',  // 需要生成路由的文件目录
       exclude: ['**/components/*.vue'],  // 排除在外的目录，即不将所有 components 目录下的 .vue 文件生成路由
       extendRoute(route) {
-        if (route.path === '/') {
-          return {
-            ...route,
-            redirect: '/bp'
-          }
-        }
+        // if (route.path === '/') {
+        //   return {
+        //     ...route,
+        //     redirect: '/bp'
+        //   }
+        // }
       }
     }),
     Layouts({

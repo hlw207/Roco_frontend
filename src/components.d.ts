@@ -14,9 +14,12 @@ declare module 'vue' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     Genie: typeof import('./components/genie.vue')['default']
+    GenieEazy: typeof import('./components/genieEazy.vue')['default']
     Round: typeof import('./components/Round.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Test: typeof import('./components/test.vue')['default']
+    Title: typeof import('./components/title.vue')['default']
+    UpdateTag: typeof import('./components/updateTag.vue')['default']
   }
 }

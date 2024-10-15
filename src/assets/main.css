@@ -4,6 +4,33 @@ body{
   margin: 0;
 }
 
+.top{
+  display: flex;
+  justify-content: center;
+}
+
+.top_box{
+  margin-top: 20px;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #e6f7ff;
+}
+
+.top_box_c1{
+  height: 15px;
+  background: #91d5ff;
+}
+
+.top_box_c2{
+  height: 10px;
+  background: rgba(186, 231, 255, 0.8);
+}
+
+.top_box_main{
+  padding: 0 30px 30px;
+  display: flex;
+}
+
 /*#app {*/
 /*  max-width: 1280px;*/
 /*  margin: 0 auto;*/
