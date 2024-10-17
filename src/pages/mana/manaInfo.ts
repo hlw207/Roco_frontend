@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import {request} from "@/util/request";
 import {ElMessage} from "element-plus";
 import type {genieChoose, genie} from "@/util/interface";
-import type {genieSimple} from "@/util/interface";
 
 export const useManaInfoStore = defineStore('manaInfo', {
     state: () => {
@@ -17,7 +16,7 @@ export const useManaInfoStore = defineStore('manaInfo', {
             ban_nums: [2,0,0,0,0,0,0,0,0,0,0,0] as number[],
             genie: [] as genie[][],
             ban: [] as genieChoose[],
-            playerChoice: [] as genieChoose[][][],
+            playerChoice: [] as genie[][][],
         }
     },
     actions: {
@@ -59,16 +58,16 @@ export const useManaInfoStore = defineStore('manaInfo', {
         addElem(){
             this.totalRound++
             this.nowRound++
-            let once : genieChoose[][] = []
+            let once : genie[][] = []
             for (let i = 0;i < 4;i++){
-                let line: genieChoose[] = []
+                let line: genie[] = []
                 if(i >= 2) {
                     for (let j = 0;j < 6;j++){
-                        line.push({'attribute' : '','genieName': ''})
+                        line.push({grade: 0, viceAttribute: "", attribute : '',genieName: ''})
                     }
                 }else{
                     for (let j = 0; j < this.ban_nums[this.totalRound - 1];j++){
-                        line.push({'attribute' : '','genieName': ''})
+                        line.push({grade: 0, viceAttribute: "", attribute : '',genieName: ''})
                     }
                 }
                 once.push(line)
@@ -122,7 +121,7 @@ export const useManaInfoStore = defineStore('manaInfo', {
             let index = this.position.color == 'blue' ? 0 : 1
             this.playerChoice[this.nowRound - 1][index][this.position.order].attribute = this.choose.attribute
             this.playerChoice[this.nowRound - 1][index][this.position.order].genieName = this.choose.genieName
-            ElMessage.success("成功禁用 " + this.choose)
+            ElMessage.success("成功禁用 " + this.choose.genieName)
             this.choose = {attribute: "", genieName: "", grade: 0, viceAttribute: ""}
             this.position.order++
             if(this.position.order >= this.ban_nums[this.nowRound - 1])
@@ -144,6 +143,8 @@ export const useManaInfoStore = defineStore('manaInfo', {
             let index = this.position.color == 'blue' ? 2 : 3
             this.playerChoice[this.nowRound - 1][index][this.position.order - 5].attribute = this.choose.attribute
             this.playerChoice[this.nowRound - 1][index][this.position.order - 5].genieName = this.choose.genieName
+            this.playerChoice[this.nowRound - 1][index][this.position.order - 5].grade = this.choose.grade
+            this.playerChoice[this.nowRound - 1][index][this.position.order - 5].viceAttribute = this.choose.viceAttribute
             ElMessage.success("成功选取 " + this.choose.genieName)
             this.choose = {attribute: "", genieName: "", grade: 0, viceAttribute: ""}
             this.position.order++
@@ -158,7 +159,8 @@ export const useManaInfoStore = defineStore('manaInfo', {
             let index = color == 'blue' ? 2 : 3
             for (let j = 0; j < 6; j++) {
                 if (this.playerChoice[this.nowRound - 1][index][j].genieName == genieName && this.playerChoice[this.nowRound - 1][index][j].attribute == attribute) {
-                    this.playerChoice[this.nowRound - 1][index][j].genieName = this.playerChoice[this.nowRound - 1][index][j].attribute = ''
+                    this.playerChoice[this.nowRound - 1][index][j].genieName = this.playerChoice[this.nowRound - 1][index][j].attribute = this.playerChoice[this.nowRound - 1][index][j].viceAttribute =''
+                    this.playerChoice[this.nowRound - 1][index][j].grade = 0
                     ElMessage.success("取消选取 " + genieName + "成功")
                 }
             }

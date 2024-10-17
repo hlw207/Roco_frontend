@@ -10,7 +10,7 @@ const bpInfo = useManaInfoStore()
 const url = ref('../../public/'+ props.attribute + '.png')
 
 const changeAttribute = () =>{
-  bpInfo.choose = ''
+  bpInfo.choose = {attribute: "", genieName: "", grade: 0, viceAttribute: ""}
   bpInfo.nowAttribute = props.attribute
 }
 </script>

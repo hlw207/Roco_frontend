@@ -115,9 +115,9 @@ watch(props,()=>{
   box-sizing: border-box;
   position: absolute;
   z-index: 10;
-  bottom: -20px;
+  bottom: -18px;
   right: 5px;
-  width: v-bind(width - 10 + 'px');
+  width: v-bind(width + 'px');
   height: v-bind(height + 93 + 'px');
   background: linear-gradient(to right,#0b103b, #2e030c);
   border: 3px solid rgba(245, 245, 245, 0.2);

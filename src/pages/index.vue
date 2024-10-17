@@ -2,6 +2,7 @@
 import {onMounted, ref} from "vue";
 import router from "@/router";
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
+import {useManaInfoStore} from "@/pages/mana/manaInfo";
 
 const height = window.innerHeight
 
@@ -9,6 +10,9 @@ const group = ref('../public/group.png')
 const page = ref('../public/page.png')
 
 const update = ref([
+  {info: '魔力值更新', date: '10-17'},
+  {info: '图鉴更新', date: '10-16'},
+  {info: '规则更新', date: '10-15'},
   {info: '主页更新', date: '10-14'},
   {info: 'bp构建', date: '09-23'},
 ])
@@ -26,7 +30,7 @@ const routerOut = (path: string) =>{
   window.open(path, '_blank');}
 
 onMounted(()=>{
-  // useBPInfoStore().clear()
+  // useManaInfoStore().clear()
 })
 </script>
 
@@ -44,7 +48,7 @@ onMounted(()=>{
         <div style="width: 24%;display: flex;flex-direction: column;align-items: center">
           <div style="width: 80%;background: white;margin-top: 30px;border-radius: 15px;display: flex;flex-direction: column;align-items: center;padding-bottom: 10px">
             <Title name="最近更新"/>
-            <el-scrollbar style="margin-top: 2px;max-height: 132px;width: 100%;">
+            <el-scrollbar style="margin-top: 2px;max-height: 152px;width: 100%;">
               <div style="display: flex;flex-direction: column;align-items: center;">
                 <template v-for="(up, index) in update">
                   <div style="display: flex;width: 85%;align-items: center;margin: 8px;">

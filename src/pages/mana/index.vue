@@ -15,11 +15,12 @@ import ManaBanButton from "@/pages/mana/component/manaBanButton.vue";
 import ManaPublicBanButton from "@/pages/mana/component/manaPublicBanButton.vue";
 import ManaChangeRound from "@/pages/mana/component/manaChangeRound.vue";
 import ManaCheckRound from "@/pages/mana/component/manaCheckRound.vue";
+import ManaGrade from "@/pages/mana/component/manaGrade.vue";
 
 const width = window.innerWidth
 const height = window.innerHeight
 
-const url = ref('../../public/back5.jpg')
+const url = ref('../../public/back3.jpg')
 const urlLogo = ref('../../public/urlLogo3.png')
 const urlB = ref('../../public/teamB.png')
 const urlR = ref('../../public/teamR.png')
@@ -78,11 +79,11 @@ onMounted(()=>{
           蓝方阵容
         </div>
         <template v-for="(genie, index) in bpInfo.playerChoice[bpInfo.nowRound - 1][2]" v-if="bpInfo.nowRound > 0">
-          <ManaChoice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :attribute="genie.attribute" :genie-name="genie.genieName"/>
+          <ManaChoice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :genie="genie"/>
         </template>
 
         <template v-for="index in 6" v-if="bpInfo.nowRound == 0">
-          <ManaChoice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" attribute="" genie-name=""/>
+          <ManaChoice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :genie='{grade: 0, viceAttribute: "", attribute : "",genieName: ""}'/>
         </template>
       </div>
       <div style="width: 70%;background: rgba(54,18,51,0.3);padding: 10px 10px;display: flex;flex-direction: column">
@@ -111,6 +112,7 @@ onMounted(()=>{
             <ManaBanButton v-if="bpInfo.nowRound != 0"/>
             <ManaPublicBanButton v-if="bpInfo.nowRound == 0"/>
             <ManaCheckRound :height="scrollerWidth * 0.44 + 60" :width="scrollerWidth"/>
+            <ManaGrade v-if="bpInfo.nowRound != 0"/>
             <ManaChangeRound />
           </div>
         </div>
@@ -121,11 +123,11 @@ onMounted(()=>{
           红方阵容
         </div>
         <template v-for="(genie, index) in bpInfo.playerChoice[bpInfo.nowRound - 1][3]"  v-if="bpInfo.nowRound > 0">
-          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :attribute="genie.attribute" :genie-name="genie.genieName"/>
+          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie="genie"/>
         </template>
 
         <template v-for="index in 6"  v-if="bpInfo.nowRound == 0">
-          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" attribute='' genie-name=''/>
+          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie="{grade: 0, viceAttribute: '', attribute : '',genieName: ''}"/>
         </template>
       </div>
     </div>

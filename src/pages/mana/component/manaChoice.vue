@@ -3,28 +3,32 @@
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
 import {computed} from "vue";
 import {useManaInfoStore} from "@/pages/mana/manaInfo";
+import type {genie} from "@/util/interface";
 
 const props = defineProps<{
   colorBox: string
   url: string
   color: string
   order: number
-  attribute: string
-  genieName: string
+  genie: genie
 }>()
 
 const bpInfo = useManaInfoStore()
 
 const urlP = computed(()=>{
-  return '../../public/' + props.attribute + '/' + props.genieName + '.png'
+  return '../../public/' + props.genie.attribute + '/' + props.genie.genieName + '.png'
 })
 
 const urlAttribute = computed(()=>{
-  return '../../public/' + props.attribute + '.png'
+  return '../../public/' + props.genie.attribute + '.png'
+})
+
+const urlViceAttribute = computed(()=>{
+  return '../../public/' + props.genie.viceAttribute + '.png'
 })
 
 const cancel = () => {
-  bpInfo.genieCancel(props.attribute, props.genieName, props.color)
+  bpInfo.genieCancel(props.genie.attribute, props.genie.genieName, props.color)
 }
 
 const change = () =>{
@@ -36,24 +40,25 @@ const change = () =>{
   <div :class="{item: props.color == bpInfo.position.color && props.order == bpInfo.position.order && bpInfo.nowRound != 0}" @click="change">
     <div class="choice" :class="{choice_grey: bpInfo.nowRound == 0}">
       <div style="width: 75px;height: 75px;border-radius: 10px;margin: 10px;display: flex;justify-content: center;align-items: center;background: rgba(205,202,193,0.7);box-sizing: border-box;position: relative;z-index: 1">
-        <img :src="props.url" style="width: 66px;height: 66px;background: white" v-if="props.genieName == ''" >
-        <div v-if="props.genieName != ''" style="width: 66px;height: 66px;background: white;display: flex;align-items: center;justify-content: center;">
+        <img :src="props.url" style="width: 66px;height: 66px;background: white" v-if="props.genie.genieName == ''" >
+        <div v-if="props.genie.genieName != ''" style="width: 66px;height: 66px;background: white;display: flex;align-items: center;justify-content: center;">
           <img :src="urlP" style="width: 80px;height: 80px;">
         </div>
       </div>
-      <div style="position:relative; display: flex;flex-direction: column;justify-content: center;align-items: center;flex: 1;margin-right: 10px" v-if="props.attribute != ''">
+      <div style="position:relative; display: flex;flex-direction: column;justify-content: center;align-items: center;flex: 1;margin-right: 10px" v-if="props.genie.attribute != ''">
         <div class="choice_text" style="font-weight: bold;margin-top: 6px">
-          {{props.genieName}}
+          {{props.genie.genieName}}
         </div>
-        <div class="choice_text" style="margin-top: 10px;font-size: 14px;">
+        <div class="choice_text" style="margin-top: 10px;font-size: 14px;display: flex;width: 100%;justify-content: center">
           <img :src="urlAttribute" style="height: 25px;margin-right: 10px">
-          {{props.attribute}}系
+          <img :src="urlViceAttribute" style="height: 25px;margin-right: 10px;margin-left: -8px" v-if="props.genie.viceAttribute != ''">
+          <div style="font-size: 13px;font-weight: bolder">{{props.genie.grade}}分</div>
         </div>
         <el-icon style="position: absolute;right: -5px;top: -10px;z-index: 1111;font-size: 18px;color: white" @click="cancel"><CircleCloseFilled /></el-icon>
 
       </div>
 
-      <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;flex: 1;margin-right: 10px" v-if="props.attribute == ''">
+      <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;flex: 1;margin-right: 10px" v-if="props.genie.attribute == ''">
         <div class="choice_text" style="font-weight: bold">宠物名称</div>
         <div class="choice_text" style="margin-top: 10px;font-size: 13px;">
           宠物属性
