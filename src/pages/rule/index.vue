@@ -141,7 +141,7 @@ const status = ref([
               <div style="display: flex;align-items: center;margin-top: 3px">
                 三、
                 <img src="../../../public/龙.png" style="height: 20px;margin-right: 3px;margin-top: 2px">
-                龙之舞/引导术 限制<span style="color: #ff5859">两强</span>
+                龙之舞/引导术 限制攻击<span style="color: #ff5859">两强</span>
               </div>
               <div style="margin-top: 3px;display: flex;align-items: center">
                 四、
@@ -211,20 +211,21 @@ const status = ref([
                     金刚菲比
                   </div>
                 </div>
-                <div style="display: flex;align-items: center">
-                  <div style="display: flex;align-items: center">
-                    <GenieEazy name="无敌胖胖猪" attribute="石" style="transform: scale(0.75)"/>
-                    禁用
-                    <img src="../../../public/石.png" style="height: 20px;margin-right: 3px;margin-top: 2px;margin-left: 5px">
-                    提气术
-                  </div>
-                </div>
                 <div style="display: flex;align-items: center;margin-top: -5px">
                   <div style="display: flex;align-items: center">
                     <GenieEazy name="云雾犬" attribute="恶魔" style=";margin-bottom: 5px;margin-left: 5px"/>
                     <div style="margin-left: -5px">禁用</div>
                     <img src="../../../public/恶魔.png" style="height: 20px;margin-right: 3px;margin-top: 2px;margin-left: 5px">
                     恶魔之盾
+                  </div>
+                </div>
+                <div style="display: flex;align-items: center">
+                  <div style="display: flex;align-items: center">
+                    <GenieEazy name="无敌胖胖猪" attribute="石" style="transform: scale(0.75)"/>
+                    <GenieEazy name="武空侠" attribute="石" style="transform: scale(1.1)"/>
+                    禁用
+                    <img src="../../../public/石.png" style="height: 20px;margin-right: 3px;margin-top: 2px;margin-left: 5px">
+                    提气术
                   </div>
                 </div>
                 <div style="display: flex;align-items: center">

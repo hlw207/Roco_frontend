@@ -27,7 +27,7 @@ watch(()=>dictionary.choose.genieName,()=>{
   pictures.value = []
   for (const name : string of genieTotal[attribute]){
     if(name.includes(dictionary.choose.genieName)){
-      pictures.value.push(name)
+      pictures.value.push('../../../public/推荐/' + dictionary.now_attribute + '系/' + name)
     }
   }
   if(dictionary.choose.genieName == '麋鹿'){
@@ -82,7 +82,7 @@ onMounted(()=>{
             <div class="right_info_inner">
               <template v-for="pic in pictures">
                 <div>
-                  <img :src="'../../../public/推荐/' + dictionary.now_attribute + '系/' + pic" style="width: 450px;max-height: 650px"/>
+                  <el-image :preview-src-list="pictures" :src="pic" style="width: 450px;max-height: 650px"/>
                   <div style="width: 450px;height: 50px;display: flex;align-items: center" v-if="pictures.length > 1">
                     <div class="inner_text" @click="move(-1)" v-if="position != 0">上一个</div>
                     <div style="display: flex;flex: 1;justify-content: right;">
