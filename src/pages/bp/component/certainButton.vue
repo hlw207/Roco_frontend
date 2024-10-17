@@ -4,7 +4,6 @@ import {useBPInfoStore} from "@/pages/bp/bpInfo";
 
 const bpInfo = useBPInfoStore()
 
-
 const choose = ()=>{
   bpInfo.genieChoose()
 }

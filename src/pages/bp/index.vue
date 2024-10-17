@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from "vue";
 import {attributes, genieTotal} from "@/stores/info";
-import Choice from "@/components/choice.vue";
+import Choice from "@/pages/bp/component/choice.vue";
 import CertainButton from "@/pages/bp/component/certainButton.vue";
 import BanButton from "@/pages/bp/component/banButton.vue";
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
 import PublicBanButton from "@/pages/bp/component/publicBanButton.vue";
+import Ban from "@/pages/bp/component/ban.vue";
+import Attribute from "@/pages/bp/component/attribute.vue";
+import Round from "@/pages/bp/component/Round.vue";
+import Genie from "@/pages/bp/component/genie.vue";
 import CheckRound from "@/pages/bp/component/checkRound.vue";
 import ChangeRound from "@/pages/bp/component/changeRound.vue";
 
@@ -20,7 +24,6 @@ const urlB = ref('../../public/teamB.png')
 const urlR = ref('../../public/teamR.png')
 const urlBP = ref('../../public/Blue.png')
 const urlRP = ref('../../public/Red.png')
-const urlBasic = ref('../../public/')
 
 const attrPic = computed(()=>{
   return '../../public/' + bpInfo.nowAttribute + '.png'

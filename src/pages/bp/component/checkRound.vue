@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, watch} from "vue";
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
+import Ban from "@/pages/bp/component/ban.vue";
 
 const props = defineProps<{
   height: number,
@@ -31,7 +32,7 @@ watch(props,()=>{
             <span style="margin-top: -2px">×</span>
           </div>
         </div>
-        <div class="check_box">
+        <div class="check_box" style="flex-wrap: wrap">
           <template v-for="genie in bpInfo.ban">
             <Ban color="gold" :show="false" :attribute="genie.attribute" :genie-name="genie.genieName" :ban-round="0" :can-delete="true" :order="-1"/>
           </template>
@@ -91,6 +92,7 @@ watch(props,()=>{
   position: absolute;
   right: 0;
   bottom: 0;
+  z-index: 100;
   display: flex;
   justify-content: right;
   height: 22px;
@@ -141,7 +143,7 @@ watch(props,()=>{
 .check_box_inner{
   display: flex;
   flex-wrap: wrap;
-  margin: 8px;
+  margin: 0 8px;
 }
 
 .check_button{

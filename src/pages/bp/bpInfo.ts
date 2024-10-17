@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import {request} from "@/util/request";
 import {ElMessage} from "element-plus";
+import type {genieChoose, genieSimple} from "@/util/interface";
 
 export const useBPInfoStore = defineStore('bpInfo', {
     state: () => {
@@ -12,12 +13,26 @@ export const useBPInfoStore = defineStore('bpInfo', {
             nowAttribute: '冰',
             choose: '',
             position: {color: 'blue', order: -1},
+            ban_nums: [5,4,3,2,1,0,0,0,0] as number[],
             genie: [] as string[][],
             ban: [] as genieChoose[],
             playerChoice: [] as genieChoose[][][],
         }
     },
     actions: {
+        clear(){
+            this.user = 0;
+            this.gameCount = 0;
+            this.nowRound = 0;
+            this.totalRound = 0;
+            this.nowAttribute = '冰';
+            this.choose = '';
+            this.position = {color: 'blue', order: -1};
+            this.ban_nums = [5,5,5,5,5,5,5,5,5,5,5,5];
+            this.genie = [];
+            this.ban = [];
+            this.playerChoice = [];
+        },
         getGenieByAttribute(){
             request({
                 url: '/genie/attribute',
@@ -53,11 +68,15 @@ export const useBPInfoStore = defineStore('bpInfo', {
             let once : genieChoose[][] = []
             for (let i = 0;i < 4;i++){
                 let line: genieChoose[] = []
-                for (let j = 0;j < 5;j++){
-                    line.push({'attribute' : '','genieName': ''})
+                if(i >= 2) {
+                    for (let j = 0;j < 6;j++){
+                        line.push({'attribute' : '','genieName': ''})
+                    }
+                }else{
+                    for (let j = 0; j < this.ban_nums[this.totalRound - 1];j++){
+                        line.push({'attribute' : '','genieName': ''})
+                    }
                 }
-                if(i >= 2)
-                    line.push({'attribute' : '','genieName': ''})
                 once.push(line)
             }
             this.playerChoice.push(once)
@@ -90,7 +109,7 @@ export const useBPInfoStore = defineStore('bpInfo', {
                 ElMessage.success("删除公ban " + genieName + "成功")
             }else {
                 for (let i = 0;i <= 1;i++){
-                    for (let j = 0;j < 5;j++){
+                    for (let j = 0;j < this.ban_nums[banRound - 1];j++){
                         if(this.playerChoice[banRound - 1][i][j].genieName == genieName && this.playerChoice[banRound - 1][i][j].attribute == attribute){
                             this.playerChoice[banRound - 1][i][j].genieName = this.playerChoice[banRound - 1][i][j].attribute = ''
                             ElMessage.success("删除公ban " + genieName + "成功")
@@ -114,7 +133,7 @@ export const useBPInfoStore = defineStore('bpInfo', {
             ElMessage.success("成功禁用 " + this.choose)
             this.choose = ''
             this.position.order++
-            if(this.position.order > 4)
+            if(this.position.order >= this.ban_nums[this.nowRound - 1])
                 if(this.position.color == 'blue') {
                     this.position.color = 'red'
                     this.position.order = 0

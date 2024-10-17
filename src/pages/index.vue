@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import router from "@/router";
+import {useBPInfoStore} from "@/pages/bp/bpInfo";
 
 const height = window.innerHeight
 
@@ -24,6 +25,9 @@ const anchers = ref([
 const routerOut = (path: string) =>{
   window.open(path, '_blank');}
 
+onMounted(()=>{
+  // useBPInfoStore().clear()
+})
 </script>
 
 <route lang="yaml">

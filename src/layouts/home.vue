@@ -11,13 +11,13 @@ const title = ref('../public/title.png')
 
 const pages = ref([
   {name: '主页', path: '/'}
-  ,{name: '图鉴', path: '/'}
+  ,{name: '图鉴', path: '/dictionary'}
   ,{name: '规则', path: '/rule'}
   ,{name: '社区', path: '/'}
   ,{name: '选宠', path: '/bp'}
   ,{name: '比赛', path: '/'}
   ,{name: '我的', path: '/'}
-  ,{name: '魔力值', path: '/'}
+  ,{name: '魔力值', path: '/mana'}
 ])
 
 
@@ -38,11 +38,21 @@ const router_to = (path: string) =>{
           <div style="height: 190px">
             <div style="height: 20px"></div>
             <img :src="title" style="height: 80px;margin-bottom: 10px">
-            <div class="jump_box">
-              <template v-for="(page, index) in pages">
-                <div class="jump_box_item" @click="router_to(page.path)">{{page.name}}</div>
-                <div style="width: 1px;background: black" v-if="index <= 6"></div>
-              </template>
+            <div style="display: flex">
+              <div class="jump_box">
+                <template v-for="(page, index) in pages">
+                  <div class="jump_box_item" @click="router_to(page.path)">{{page.name}}</div>
+                  <div style="width: 1px;background: black" v-if="index <= 6"></div>
+                </template>
+              </div>
+              <div style="display: flex;justify-content: right;flex: 1">
+                <div style="cursor: pointer;padding: 0 15px;height: 48px;background: linear-gradient(to bottom, rgba(48, 48, 48, 1), rgba(69, 67, 80, 1));;border-radius: 10px;margin-right: 20px;display: flex;align-items: center;justify-content: center">
+                  <div class="load">
+                    <el-icon><User /></el-icon>
+                  </div>
+                  <div style="color: white;font-size: 13px">登录</div>
+                </div>
+              </div>
             </div>
           </div>
           <div style="height: 30px;display: flex;align-items: center;background: #e6f7ff">
@@ -117,4 +127,17 @@ const router_to = (path: string) =>{
   background: black;
 }
 
+.load{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background: #eeeeee;
+  cursor: pointer;
+  color: black;
+  font-size: 18px;
+  margin-right: 10px;
+}
 </style>
