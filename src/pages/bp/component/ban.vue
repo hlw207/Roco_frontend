@@ -61,9 +61,9 @@ watch(()=>props.genieName, ()=>{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
-  width: 64px;
-  border-radius: 32px;
+  height: 62px;
+  width: 62px;
+  border-radius: 30px;
   margin: 8px 6px;
 }
 

@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import {computed, h, onMounted, ref, watch} from "vue";
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
+import type {genie} from "@/util/interface";
 
 const props = defineProps<{
   length: number,
-  genie: string
+  genie: genie
 }>()
 
 const l = ref(props.length * 0.1)
 const l_margin = ref(props.length * 0.0055)
 const bpInfo = useBPInfoStore()
 
-const url = ref('../../public/'+ bpInfo.nowAttribute + '/' + props.genie + '.png')
+const url = ref('../../public/'+ props.genie.attribute + '/' + props.genie.genieName + '.png')
 
 const beBanned = computed(()=>{
-  let isBanned = bpInfo.ban.some((banGenie) => banGenie.genieName == props.genie);
+  let isBanned = bpInfo.ban.some((banGenie) => banGenie.genieName == props.genie.genieName);
   if(isBanned)
     return isBanned
   if(bpInfo.position.order <= 4){
     let index = bpInfo.position.color == 'blue' ? 3 : 2
     for (let i = 0;i < bpInfo.nowRound;i++){
       for (let j = 0;j < bpInfo.ban_nums[i];j++){
-        if(bpInfo.playerChoice[i][0][j].genieName == props.genie || bpInfo.playerChoice[i][1][j].genieName == props.genie){
+        if(bpInfo.playerChoice[i][0][j].genieName == props.genie.genieName || bpInfo.playerChoice[i][1][j].genieName == props.genie.genieName){
           isBanned = true
           break
         }
@@ -29,7 +30,7 @@ const beBanned = computed(()=>{
       if(isBanned)
         break
       for (let j = 0;j < 6;j++){
-        if(i < bpInfo.nowRound - 1 && bpInfo.playerChoice[i][index][j].genieName == props.genie){
+        if(i < bpInfo.nowRound - 1 && bpInfo.playerChoice[i][index][j].genieName == props.genie.genieName){
           isBanned = true
           break
         }
@@ -41,7 +42,7 @@ const beBanned = computed(()=>{
     let index = bpInfo.position.color == 'blue' ? 2 : 3
     for (let i = 0;i < bpInfo.nowRound;i++){
       for (let j = 0;j < bpInfo.ban_nums[i];j++){
-        if(bpInfo.playerChoice[i][0][j].genieName == props.genie || bpInfo.playerChoice[i][1][j].genieName == props.genie){
+        if(bpInfo.playerChoice[i][0][j].genieName == props.genie.genieName || bpInfo.playerChoice[i][1][j].genieName == props.genie.genieName){
           isBanned = true
           break
         }
@@ -49,7 +50,7 @@ const beBanned = computed(()=>{
       if(isBanned)
         break
       for (let j = 0;j < 6;j++){
-        if(bpInfo.playerChoice[i][index][j].genieName == props.genie){
+        if(bpInfo.playerChoice[i][index][j].genieName == props.genie.genieName){
           isBanned = true
           break
         }
@@ -130,8 +131,8 @@ watch(()=>props.length,()=>{
   l_margin.value = props.length * 0.0055
 })
 
-watch(()=>props.genie,()=>{
-  url.value = '../../public/'+ bpInfo.nowAttribute + '/' + props.genie + '.png'
+watch(()=>props.genie.genieName,()=>{
+  url.value = '../../public/'+ props.genie.attribute + '/' + props.genie.genieName + '.png'
 })
 
 const backgroundColor = ref()
@@ -197,7 +198,7 @@ const getMainColor=()=> {
       </div>
       <div class="genie_text">
 <!--        <div class="genie_choice" style="margin-right: 2px;color: #191cde;" v-if="blueBan">×</div>-->
-        {{props.genie}}
+        {{props.genie.genieName}}
 <!--        <div class="genie_choice" style="margin-left: 2px;color: #bb0d20" v-if="redBan">×</div>-->
       </div>
     </div>

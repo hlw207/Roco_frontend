@@ -3,14 +3,14 @@
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
 import {computed} from "vue";
 import {useManaInfoStore} from "@/pages/mana/manaInfo";
-import type {genie} from "@/util/interface";
+import type {genie, manaGenie} from "@/util/interface";
 
 const props = defineProps<{
   colorBox: string
   url: string
   color: string
   order: number
-  genie: genie
+  genie: manaGenie
 }>()
 
 const bpInfo = useManaInfoStore()

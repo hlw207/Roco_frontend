@@ -19,7 +19,7 @@ watch(()=>dictionary.now_attribute,()=>{
 
 watch(()=>dictionary.choose.genieName,()=>{
   position.value = 0
-  if(dictionary.choose.attribute == null) {
+  if(dictionary.choose.attribute == '') {
     pictures.value = []
     return
   }
@@ -27,7 +27,7 @@ watch(()=>dictionary.choose.genieName,()=>{
   pictures.value = []
   for (const name : string of genieTotal[attribute]){
     if(name.includes(dictionary.choose.genieName)){
-      pictures.value.push('../../../public/推荐/' + dictionary.now_attribute + '系/' + name)
+      pictures.value.push('../../../public/推荐/' + dictionary.choose.attribute + '系/' + name)
     }
   }
   if(dictionary.choose.genieName == '麋鹿'){
@@ -73,11 +73,11 @@ onMounted(()=>{
           </div>
           <div style="display: flex;flex-wrap: wrap;margin-top: 20px">
             <template v-for="genie in dictionary.genieList">
-              <GenieShow :grade="genie.grade" :name="genie.genieName"/>
+              <GenieShow  :genie="genie"/>
             </template>
           </div>
         </div>
-        <div class="right_info">
+        <div class="right_info" style="">
           <div class="right_info_outer">
             <div class="right_info_inner">
               <template v-for="pic in pictures">
@@ -86,7 +86,7 @@ onMounted(()=>{
                   <div style="width: 450px;height: 50px;display: flex;align-items: center" v-if="pictures.length > 1">
                     <div class="inner_text" @click="move(-1)" v-if="position != 0">上一个</div>
                     <div style="display: flex;flex: 1;justify-content: right;">
-                      <div class="inner_text" @click="move(1)" style="margin-right: 10px" v-if="position != pictures.length - 1">下一个</div>
+                      <div class="inner_text" @click="move(1)" style="margin-right: 20px" v-if="position != pictures.length - 1">下一个</div>
                     </div>
                   </div>
                 </div>

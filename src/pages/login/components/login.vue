@@ -1,41 +1,37 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import {PICTURE_ADDR} from "@/config";
-const props = defineProps<{
-  account: string
-}>()
+import {useLoginInfoStore} from "@/pages/login/loginInfo";
 
-const logo = ref(PICTURE_ADDR + '/logo.png')
-const emits = defineEmits(['changeOrder', 'changeType','addAccount'])
-const account = ref(props.account)
+const logo = ref('../../../public/teamB.png')
 const click = ref(false)
+const login = useLoginInfoStore()
+
+const account = ref(login.account)
 
 const ifNext = computed(()=>{
-  // 正则表达式匹配手机号
-  const phonePattern = /^1[0-9]{10}$/;
-  // 正则表达式匹配邮箱号
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // // 正则表达式匹配手机号
+  // const phonePattern = /^1[0-9]{10}$/;
+  // // 正则表达式匹配邮箱号
+  // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // 正则表达式匹配以"prism"开头的账号
-  const prismAccountPattern = /^Prism.*/;
-
-  if(phonePattern.test(account.value) || emailPattern.test(account.value) || prismAccountPattern.test(account.value)) {
+  const prismAccountPattern = /^Roco.*/;
+  if(prismAccountPattern.test(account.value)) {
     click.value = false
     return true
   }
-
   return false
 })
 
 const change = () =>{
   click.value = true
   if(ifNext.value) {
-    emits('addAccount', account.value)
-    emits('changeOrder')
+    login.account = account.value
+    login.order = 1
   }
 }
 
 const changeType = () =>{
-  emits('changeType', 1)
+  login.type = 1
 }
 </script>
 
@@ -44,16 +40,16 @@ const changeType = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        Prism Search
+        91 Roco
       </div>
     </div>
     <div class="loginLogin">登录</div>
-    <div class="loginTip">继续Prism</div>
+    <div class="loginTip">继续Roco</div>
     <div style="height: 20px">
     </div>
-    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Prism账号或手机号或电子邮箱</div>
+    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Roco账号</div>
     <div class="loginInput">
-      <input v-model="account" class="inputInput" placeholder="Prism账号、手机号或 电子邮箱">
+      <input v-model="account" class="inputInput" placeholder="Roco账号">
     </div>
     <div class="loginRegister">
       没有账户？

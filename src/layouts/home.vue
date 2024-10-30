@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import router from "@/router";
+import {useUserInfoStore} from "@/stores/user";
 
 const height = window.innerHeight
 
 const url = ref('../public/home.png')
 const logo = ref('../public/teamB.png')
 const title = ref('../public/title.png')
-
+const user = useUserInfoStore()
 
 const pages = ref([
   {name: '主页', path: '/'}
@@ -20,6 +21,12 @@ const pages = ref([
   ,{name: '魔力值', path: '/mana'}
 ])
 
+const login = ()=>{
+  if(user.id == '')
+    router.push('/login')
+  else
+    router.push('/home')
+}
 
 const router_to = (path: string) =>{
   router.push(path)
@@ -45,12 +52,13 @@ const router_to = (path: string) =>{
                   <div style="width: 1px;background: black" v-if="index <= 6"></div>
                 </template>
               </div>
-              <div style="display: flex;justify-content: right;flex: 1">
+              <div style="display: flex;justify-content: right;flex: 1" @click="login">
                 <div style="cursor: pointer;padding: 0 15px;height: 48px;background: linear-gradient(to bottom, rgba(48, 48, 48, 1), rgba(69, 67, 80, 1));;border-radius: 10px;margin-right: 20px;display: flex;align-items: center;justify-content: center">
                   <div class="load">
                     <el-icon><User /></el-icon>
                   </div>
-                  <div style="color: white;font-size: 13px">登录</div>
+                  <div style="color: white;font-size: 13px" v-if="user.id == ''">登录</div>
+                  <div style="color: white;font-size: 13px" v-if="user.id != ''">{{user.name}}</div>
                 </div>
               </div>
             </div>

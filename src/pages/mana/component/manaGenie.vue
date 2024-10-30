@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {computed, h, onMounted, ref, watch} from "vue";
-import type {genie} from "@/util/interface";
+import type {genie, manaGenie} from "@/util/interface";
 import {useManaInfoStore} from "@/pages/mana/manaInfo";
 
 const props = defineProps<{
   length: number,
-  genie: genie
+  genie: manaGenie
 }>()
 
 const l = ref(props.length * 0.1)

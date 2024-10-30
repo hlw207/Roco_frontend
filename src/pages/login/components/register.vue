@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import {PICTURE_ADDR} from "@/config";
-const props = defineProps<{
-  account: string
-}>()
+import {useLoginInfoStore} from "@/pages/login/loginInfo";
+import {request} from "@/util/request";
+import {ElMessage} from "element-plus";
 
-const logo = ref(PICTURE_ADDR + '/logo.png')
-const emits = defineEmits(['changeOrder', 'changeType','addAccount'])
-const account = ref(props.account)
+const logo = ref('../../../public/teamB.png')
+const login = useLoginInfoStore()
+
+const account = ref(login.account)
 const click = ref(false)
 
 const ifNext = computed(()=>{
-  // 正则表达式匹配手机号
-  const phonePattern = /^1[0-9]{10}$/;
-  // 正则表达式匹配邮箱号
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // // 正则表达式匹配手机号
+  // const phonePattern = /^1[0-9]{10}$/;
+  // // 正则表达式匹配邮箱号
+  // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // 正则表达式匹配以"prism"开头的账号
-  const prismAccountPattern = /^Prism.*/;
+  const prismAccountPattern = /^Roco.*/;
 
-  if(phonePattern.test(account.value) || emailPattern.test(account.value) || prismAccountPattern.test(account.value)) {
+  if(prismAccountPattern.test(account.value)) {
     click.value = false
     return true
   }
@@ -27,11 +28,24 @@ const ifNext = computed(()=>{
 })
 
 const change = () =>{
-  click.value = true
-  if(ifNext.value) {
-    emits('addAccount', account.value)
-    emits('changeOrder')
-  }
+  request({
+    url: '/user/name',
+    method: 'get',
+    params:{
+      account: account.value
+    }
+  }).then((res)=>{
+    if(res.data){
+      ElMessage.warning("改用户名已存在")
+      account.value = login.account = ''
+    }else {
+      click.value = true
+      if(ifNext.value) {
+        login.account = account.value
+        login.order = 1
+      }
+    }
+  })
 }
 </script>
 
@@ -40,18 +54,21 @@ const change = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        Prism Search
+        91 Roco
       </div>
     </div>
     <div class="loginLogin">注册账号</div>
     <div style="height: 20px">
     </div>
-    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Prism账号或手机号或电子邮箱</div>
+    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Roco账号</div>
     <div class="loginInput">
-      <input v-model="account" class="inputInput" placeholder="Prism账号、手机号或 电子邮箱">
+      <input v-model="account" class="inputInput" placeholder="Roco账号">
     </div>
     <div class="loginRegister">
-      Prism账号以Prism开头，例：Prism1024
+      Roco账号以Roco开头，例：Roco91
+    </div>
+    <div style="margin-top: 5px;font-size: 12px;color: rgb(0, 103, 184);cursor: pointer" @click="login.type = 0">
+      已有账号？立即登录
     </div>
     <div class="loginBottom">
       <div class="loginNext" @click="change">下一步</div>

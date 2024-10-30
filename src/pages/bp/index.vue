@@ -77,11 +77,11 @@ onMounted(()=>{
           蓝方阵容
         </div>
         <template v-for="(genie, index) in bpInfo.playerChoice[bpInfo.nowRound - 1][2]" v-if="bpInfo.nowRound > 0">
-          <Choice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :attribute="genie.attribute" :genie-name="genie.genieName"/>
+          <Choice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :genie="genie"/>
         </template>
 
         <template v-for="index in 6" v-if="bpInfo.nowRound == 0">
-          <Choice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" attribute="" genie-name=""/>
+          <Choice color-box="rgba(87, 138, 187, 0.9)" :url="urlBP" color="blue" :order="index + 5" :genie='{attribute: "", genieName: "", grade: 0, viceAttribute: ""}'/>
         </template>
       </div>
       <div style="width: 70%;background: rgba(54,18,51,0.3);padding: 10px 10px;display: flex;flex-direction: column">
@@ -142,11 +142,11 @@ onMounted(()=>{
           红方阵容
         </div>
         <template v-for="(genie, index) in bpInfo.playerChoice[bpInfo.nowRound - 1][3]"  v-if="bpInfo.nowRound > 0">
-          <Choice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :attribute="genie.attribute" :genie-name="genie.genieName"/>
+          <Choice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie="genie"/>
         </template>
 
         <template v-for="index in 6"  v-if="bpInfo.nowRound == 0">
-          <Choice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" attribute='' genie-name=''/>
+          <Choice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie='{attribute: "", genieName: "", grade: 0, viceAttribute: ""}'/>
         </template>
       </div>
     </div>
@@ -158,11 +158,11 @@ onMounted(()=>{
   overflow: hidden;
   color: rgba(87, 138, 187, 0.7);
   position: relative;
-  //width: v-bind(width + 'px');
-  //height: v-bind(height + 'px');
   z-index: 1;
   display: flex;
   flex-direction: column;
+//width: v-bind(width + 'px');
+//height: v-bind(height + 'px');
 }
 
 .picture{

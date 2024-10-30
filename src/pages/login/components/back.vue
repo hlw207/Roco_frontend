@@ -2,7 +2,7 @@
 import router from "@/router";
 
 const back = ()=>{
-  router.push('/')
+  router.back()
 }
 </script>
 
@@ -10,7 +10,7 @@ const back = ()=>{
   <div class="Div">
     <div class="back" @click="back">
       <el-icon style="margin-right: 5px"><Back /></el-icon>
-      回到首页
+      返回
     </div>
   </div>
 </template>

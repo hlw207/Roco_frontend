@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
-import type {genieSimple} from "@/util/interface";
+import type {genie, genieSimple} from "@/util/interface";
 import {request} from "@/util/request";
 
 export const useDictionaryInfoStore = defineStore('dictionaryInfo', {
     state: ()=> {
         return {
             now_attribute: '冰',
-            genieList: [] as genieSimple[],
-            choose: {} as genieChoose
+            genieList: [] as genie[],
+            choose: {attribute: "", genieName: "", grade: 0, viceAttribute: ""} as genie
         }
     },
     actions: {
@@ -21,7 +21,7 @@ export const useDictionaryInfoStore = defineStore('dictionaryInfo', {
             }).then((res)=>{
                 console.log(res.data)
                 this.genieList = res.data
-                this.choose = {}
+                this.choose = {attribute: "", genieName: "", grade: 0, viceAttribute: ""}
             })
         }
     },

@@ -14,6 +14,7 @@ declare module 'vue' {
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     Genie: typeof import('./pages/bp/component/genie.vue')['default']
     GenieEazy: typeof import('./components/genieEazy.vue')['default']

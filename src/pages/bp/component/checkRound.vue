@@ -116,7 +116,7 @@ watch(props,()=>{
   bottom: -20px;
   right: 5px;
   width: v-bind(width - 10 + 'px');
-  height: v-bind(height + 93 + 'px');
+  height: v-bind(height + 103 + 'px');
   background: linear-gradient(to right,#0b103b, #2e030c);
   border: 3px solid rgba(245, 245, 245, 0.2);
   border-radius: 20px;

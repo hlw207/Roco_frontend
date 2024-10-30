@@ -3,24 +3,22 @@ import {ref} from "vue";
 import {PICTURE_ADDR} from "@/config";
 import {Back} from "@element-plus/icons-vue";
 import router from "@/router";
-import {useUserStore} from "@/stores/user";
 import {ElMessage} from "element-plus";
 import {request} from "@/util/request";
-const props = defineProps<{
-  account : string
-}>()
+import {useUserInfoStore} from "@/stores/user";
+import {useLoginInfoStore} from "@/pages/login/loginInfo";
 
 const blank = ref(false)
 const wrong = ref(false)
 
-const user = useUserStore()
+const login = useLoginInfoStore()
+const user = useUserInfoStore()
 const password = ref('')
 const passwordCertain = ref('')
-const logo = ref(PICTURE_ADDR + '/logo.png')
-const emits = defineEmits(['changeType'])
+const logo = ref('../../../public/teamB.png')
 
 const back = () =>{
-  router.push({path: '/login', query: {'type': 1, 'order' : 0}})
+  login.order = 0
 }
 
 const change = () =>{
@@ -33,27 +31,25 @@ const change = () =>{
     password.value = ''
   }else {
     request({
-      url: '/security/register',
-      method: 'POST',
-      data: {
-        name: props.account,
+      url: '/user/register',
+      method: 'GET',
+      params: {
+        account: login.account,
         password: password.value,
-        age: 18
       }
     }).then((res)=>{
       console.log(res)
-      // localStorage.setItem('token', res.data)
-      ElMessage.success("注册成功")
-      router.push('/')
-      // user.id = 0
-      // emits('changeOrder')
+      if(res.data) {
+        ElMessage.success("注册成功")
+        user.id = login.account
+        router.push('/')
+      }else {
+        ElMessage.warning("注册失败")
+      }
     })
   }
 }
 
-const changeType = () =>{
-  emits('changeType', 2)
-}
 </script>
 
 <template>
@@ -61,14 +57,14 @@ const changeType = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        Prism Search
+        91 Roco
       </div>
     </div>
     <div class="loginBack">
       <div class="loginIconBox" @click="back">
         <el-icon><Back /></el-icon>
       </div>
-      {{props.account}}
+      {{login.account}}
     </div>
     <div class="loginLogin">输入密码</div>
     <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">密码不能为空</div>

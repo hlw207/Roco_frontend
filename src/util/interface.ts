@@ -15,4 +15,12 @@ interface genie{
     grade: number
 }
 
-export {type genieChoose, type genieSimple, type genie}
+interface manaGenie{
+    attribute: string,
+    viceAttribute: string,
+    genieName: string,
+    grade: number,
+    extra: string
+}
+
+export {type genieChoose, type genieSimple, type genie, type manaGenie}

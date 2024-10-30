@@ -9,57 +9,57 @@ import {useRoute} from "vue-router";
 import Register from "@/pages/login/components/register.vue";
 import RegisterPassword from "@/pages/login/components/RegisterPassword.vue";
 import Back from "@/pages/login/components/back.vue";
+import {useLoginInfoStore} from "@/pages/login/loginInfo";
+import {l} from "vite/dist/node/types.d-aGj9QkWt";
 
 const route = useRoute()
 
-const info = reactive({
-  account : '',
-  password: '',
-})
+const login = useLoginInfoStore()
 
-const type = ref(0)
-const order = ref(0)
+// const changeType = (t : number) =>{
+//   type.value = t
+//   info.account = ''
+//   router.push({path: '/login', query: {'type': type.value, 'order' : order.value}})
+// }
+//
+// const changeOrder = () =>{
+//   order.value++
+//   router.push({path: '/login', query: {'type': type.value, 'order' : order.value}})
+// }
+//
+// const addAccount = (account: string) =>{
+//   info.account = account
+// }
 
-const changeType = (t : number) =>{
-  type.value = t
-  info.account = ''
-  router.push({path: '/login', query: {'type': type.value, 'order' : order.value}})
-}
-
-const changeOrder = () =>{
-  order.value++
-  router.push({path: '/login', query: {'type': type.value, 'order' : order.value}})
-}
-
-const addAccount = (account: string) =>{
-  info.account = account
-}
-
-const exam = () =>{
-  if(route.query.type == null && route.query.order == null){
-    type.value = order.value = 0
-    return
-  }
-  if(isNaN(route.query.type) || isNaN(route.query.order)){
-    router.push('/login')
-    type.value = order.value = 0
-    return;
-  }
-  type.value = route.query.type
-  order.value = route.query.order
-  if(order.value > 0 && info.account == ''){
-    router.push('/login')
-    type.value = order.value = 0
-    return;
-  }
-}
-
-watch(()=>route.query, ()=>{
-  exam()
-})
-
+// const exam = () =>{
+//   if(route.query.type == null && route.query.order == null){
+//     type.value = order.value = 0
+//     return
+//   }
+//   if(isNaN(route.query.type) || isNaN(route.query.order)){
+//     router.push('/login')
+//     type.value = order.value = 0
+//     return;
+//   }
+//   type.value = route.query.type
+//   order.value = route.query.order
+//   if(order.value > 0 && info.account == ''){
+//     router.push('/login')
+//     type.value = order.value = 0
+//     return;
+//   }
+// }
+//
+// watch(()=>route.query, ()=>{
+//   exam()
+// })
+//
+// onMounted(()=>{
+//   exam()
+// })
 onMounted(()=>{
-  exam()
+  login.type = 0
+  login.order = 0
 })
 </script>
 
@@ -68,13 +68,13 @@ onMounted(()=>{
     <div>
       <div class="title">
         <el-icon class="pic"><Grid /></el-icon>
-        欢迎使用Prism
+        欢迎加入91花瓶PK
       </div>
       <div class="login">
-        <Login @change-order="changeOrder" @change-type="changeType" @add-account="addAccount" v-if="type==0&&order==0" :account="info.account"/>
-        <Password @change-type="changeType" v-if="type==0&&order==1" :account="info.account"/>
-        <Register @change-order="changeOrder" @change-type="changeType" @add-account="addAccount" v-if="type==1&&order==0" :account="info.account"/>
-        <RegisterPassword @change-type="changeType" v-if="type==1&&order==1" :account="info.account"/>
+        <Login v-if="login.type==0 && login.order==0"/>
+        <Password v-if="login.type==0 && login.order==1"/>
+        <Register v-if="login.type==1 && login.order==0"/>
+        <RegisterPassword v-if="login.type==1 && login.order==1"/>
       </div>
     </div>
     <Back />

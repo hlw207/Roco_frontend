@@ -1,69 +1,57 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {PICTURE_ADDR} from "@/config";
 import {Back} from "@element-plus/icons-vue";
 import router from "@/router";
-import {useUserStore} from "@/stores/user";
 import {request} from "@/util/request";
 import {ElMessage} from "element-plus";
+import {useLoginInfoStore} from "@/pages/login/loginInfo";
+import {useUserInfoStore} from "@/stores/user";
 
-const props = defineProps<{
-  account : string
-}>()
+const login = useLoginInfoStore()
+const user = useUserInfoStore()
 
 const blank = ref(false)
 const wrong = ref(false)
 
 const password = ref('')
-const logo = ref(PICTURE_ADDR + '/logo.png')
-const emits = defineEmits(['changeType'])
+const logo = ref('../../../public/teamB.png')
 
 const back = () =>{
-  router.push('/login')
+  login.order = 0
 }
 
 const change = () =>{
-  // if(password.value == ''){
-  //   blank.value = true
-  //   wrong.value = false
-  // }else {
-  //   if(props.account == 'Prism123' && password.value == '123'){
-  //     localStorage.setItem('userId', '1')
-  //     user.id = 1
-  //     router.push('/manager')
-  //     return;
-  //   }else {
-  //     localStorage.setItem('userId', '0')
-  //     user.id = 0
-  //     router.push('/')
-  //     return
-  //   }
+  if(password.value == ''){
+    blank.value = true
+    wrong.value = false
+    return
+  }
   request({
-    url: '/security/login',
-    method: 'POST',
-    data: {
-      name: props.account,
+    url: '/user/login',
+    method: 'GET',
+    params: {
+      account: login.account,
       password: password.value
     }
   }).then((res)=>{
     console.log(res)
-    localStorage.setItem('userId', res.data)
-    // 解析JWT令牌
-    // 从LocalStorage中获取JWT令牌
-    // const token = localStorage.getItem('token');
-    ElMessage.success("登录成功")
-    if(localStorage.getItem('userId') == 70535){
-      router.push('/manager')
-    }else
+    if(res.data) {
+      ElMessage.success("登录成功")
+      user.id = login.account
+      // user.name
       router.push('/')
-    // user.id = 0
+    }
+    else {
+      ElMessage.warning('账号或密码错误')
+      blank.value = false
+      wrong.value = true
+    }
   }).catch((err)=>{
-    ElMessage.warning('账号或密码错误')
+    ElMessage.warning('登录错误')
   })
 }
 
 const changeType = () =>{
-  emits('changeType', 2)
 }
 </script>
 
@@ -72,18 +60,18 @@ const changeType = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        Prism Search
+        91 Roco
       </div>
     </div>
     <div class="loginBack">
       <div class="loginIconBox" @click="back">
         <el-icon><Back /></el-icon>
       </div>
-      {{props.account}}
+      {{login.account}}
     </div>
     <div class="loginLogin">输入密码</div>
-    <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">请输入Prism账户的密码</div>
-    <div v-if="wrong" style="color: red;font-size: 15px;margin-top: 10px;">Prism账户密码错误</div>
+    <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">请输入Roco账户的密码</div>
+    <div v-if="wrong" style="color: red;font-size: 15px;margin-top: 10px;">Roco账户密码错误</div>
     <div class="loginInput">
       <input class="inputInput" type="password" v-model="password" placeholder="密码">
     </div>
