@@ -10,6 +10,7 @@ export const useManaInfoStore = defineStore('manaInfo', {
             gameCount: 0,
             nowRound: 0,
             totalRound: 0,
+            grade: 5,
             nowAttribute: '武斗',
             choose: {attribute: "", genieName: "", grade: 0, viceAttribute: "", extra: ""} as manaGenie,
             position: {color: 'blue', order: -1},
@@ -25,6 +26,7 @@ export const useManaInfoStore = defineStore('manaInfo', {
             this.gameCount = 0;
             this.nowRound = 0;
             this.totalRound = 0;
+            this.grade = 5;
             this.nowAttribute = '冰';
             this.choose = {attribute: "", genieName: "", grade: 0, viceAttribute: "", extra: ""};
             this.position = {color: 'blue', order: -1};
@@ -53,6 +55,22 @@ export const useManaInfoStore = defineStore('manaInfo', {
                     this.genie[index].push(genieList[i])
                 }
                 console.log(this.genie)
+            })
+        },
+        getGenieByGrade(){
+            request({
+                url: '/genie/mana/grade',
+                method: 'get',
+                params:{
+                    grade: this.grade
+                }
+            }).then((res) =>{
+                this.genie = [[]]
+                const genieList : manaGenie[] = res.data
+                console.log(genieList)
+                for (let i = 0;i < genieList.length;i++){
+                    this.genie[0].push(genieList[i])
+                }
             })
         },
         addElem(){
