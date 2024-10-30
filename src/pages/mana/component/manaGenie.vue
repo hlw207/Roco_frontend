@@ -199,6 +199,7 @@ const getMainColor=()=> {
       <div class="genie_text">
         <!--        <div class="genie_choice" style="margin-right: 2px;color: #191cde;" v-if="blueBan">×</div>-->
         {{props.genie.genieName}}
+        <div v-if="props.genie.extra != ''">({{props.genie.extra}})</div>
         <!--        <div class="genie_choice" style="margin-left: 2px;color: #bb0d20" v-if="redBan">×</div>-->
       </div>
     </div>
