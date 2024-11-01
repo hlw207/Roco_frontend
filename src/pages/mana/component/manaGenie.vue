@@ -183,7 +183,7 @@ const getMainColor=()=> {
   backgroundColor.value = 'rgb(' + avgR + "," + avgG  + "," + avgB + ',0.9' +')'
   backColorMask.value = 'linear-gradient(to bottom,' + backgroundColor.value + ","
   backColorMask.value += backgroundColor.value+ ',rgb(' + avgR + "," + avgG  + "," + avgB + "," + "0.1)"
-  console.log(backColorMask.value)
+  // console.log(backColorMask.value)
 
 }
 

@@ -177,7 +177,7 @@ onMounted(()=>{
         </template>
 
         <template v-for="index in 6"  v-if="bpInfo.nowRound == 0">
-          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie="{grade: 0, viceAttribute: '', attribute : '',genieName: ''}"/>
+          <ManaChoice color-box="rgba(183, 118, 123, 0.9)" :url="urlRP" color="red" :order="index + 5" :genie="{grade: 0, viceAttribute: '', attribute : '',genieName: '', extra: ''}"/>
         </template>
       </div>
     </div>

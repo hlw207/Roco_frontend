@@ -39,6 +39,15 @@ const change = () =>{
       ElMessage.success("登录成功")
       user.id = login.account
       // user.name
+      request({
+        url: '/user/getName',
+        method: 'GET',
+        params:{
+          account: login.account
+        }
+      }).then((res)=>{
+        user.name = res.data
+      })
       router.push('/')
     }
     else {

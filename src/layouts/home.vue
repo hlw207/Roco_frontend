@@ -17,8 +17,8 @@ const pages = ref([
   ,{name: '社区', path: '/'}
   ,{name: '选宠', path: '/bp'}
   ,{name: '比赛', path: '/'}
-  ,{name: '我的', path: '/'}
-  ,{name: '魔力值', path: '/mana'}
+  ,{name: '我的', path: '/home'}
+  ,{name: '魔力值', path: '/manaHome'}
 ])
 
 const login = ()=>{
@@ -58,7 +58,8 @@ const router_to = (path: string) =>{
                     <el-icon><User /></el-icon>
                   </div>
                   <div style="color: white;font-size: 13px" v-if="user.id == ''">登录</div>
-                  <div style="color: white;font-size: 13px" v-if="user.id != ''">{{user.name}}</div>
+                  <div style="color: white;font-size: 13px" v-if="user.id != ''">{{user.name != '' ? user.name : '91roco'}}
+                  </div>
                 </div>
               </div>
             </div>

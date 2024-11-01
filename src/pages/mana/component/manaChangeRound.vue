@@ -2,6 +2,7 @@
 import {useBPInfoStore} from "@/pages/bp/bpInfo";
 import {ref} from "vue";
 import {useManaInfoStore} from "@/pages/mana/manaInfo";
+import router from "@/router";
 
 const bpInfo = useManaInfoStore()
 const show = ref(false)
@@ -20,6 +21,7 @@ const add = ()=>{
   <div class="check">
     <div class="check_text" v-if="bpInfo.totalRound == bpInfo.nowRound && bpInfo.totalRound != 0" @click="show=true">清除本轮</div>
     <div class="check_text" @click="add" v-if="bpInfo.totalRound == bpInfo.nowRound">进入下轮</div>
+    <div class="check_text" @click="router.back()">返回上页</div>
   </div>
 
   <el-dialog

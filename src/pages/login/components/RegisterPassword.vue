@@ -42,6 +42,15 @@ const change = () =>{
       if(res.data) {
         ElMessage.success("注册成功")
         user.id = login.account
+        request({
+          url: '/user/getName',
+          method: 'GET',
+          params:{
+            account: login.account
+          }
+        }).then((res)=>{
+          user.name = res.data
+        })
         router.push('/')
       }else {
         ElMessage.warning("注册失败")

@@ -7,7 +7,7 @@ const bpInfo = useManaInfoStore()
 const blueGrade = computed(()=>{
   let grade = 0
   for (const genie of bpInfo.playerChoice[bpInfo.nowRound - 1][2]){
-    console.log(genie)
+    // console.log(genie)
     if(genie.grade != null)
       grade += genie.grade
   }
@@ -17,7 +17,7 @@ const blueGrade = computed(()=>{
 const redGrade = computed(()=>{
   let grade = 0
   for (const genie of bpInfo.playerChoice[bpInfo.nowRound - 1][3]){
-    console.log(genie)
+    // console.log(genie)
     if(genie.grade != null)
       grade += genie.grade
   }

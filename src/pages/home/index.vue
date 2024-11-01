@@ -28,6 +28,11 @@ const change = () =>{
   resize.value = true
 }
 
+const cancel = () =>{
+  resize.value = false
+  name.value = ''
+}
+
 const submit = () =>{
   request({
     url: '/user/change',
@@ -72,13 +77,14 @@ onMounted(()=>{
             <img :src="url" style="width: 70px; height: 70px;" />
           </div>
           <div style="font-size: 20px;font-weight: bolder;margin-left: 20px" v-if="!resize">
-            {{user.name}}
+            {{user.name != '' ? user.name : '91roco'}}
           </div>
           <el-input v-if="resize" v-model="name" style="font-size: 16px;width: 150px;margin-left: 20px">
           </el-input>
           <div style="width: 80px;height: 24px;border-radius: 3px;display: flex;align-items: center;justify-content: center;font-size: 13px;border: 1px solid rgba(0,0,0,0.2);cursor: pointer;margin-left: 20px" v-if="!resize" @click="change">修改资料</div>
           <div style="width: 80px;height: 24px;border-radius: 3px;display: flex;align-items: center;justify-content: center;font-size: 13px;border: 1px solid rgba(0,0,0,0.2);cursor: pointer;margin-left: 20px" v-if="resize" @click="submit">确定修改</div>
-          <div style="width: 80px;height: 24px;border-radius: 3px;display: flex;align-items: center;justify-content: center;font-size: 13px;border: 1px solid rgba(255,88,89,0.2);margin-left: 10px;cursor: pointer;color: #ff5859" @click="exit">退出登录</div>
+          <div style="width: 80px;height: 24px;border-radius: 3px;display: flex;align-items: center;justify-content: center;font-size: 13px;border: 1px solid rgba(255,88,89,0.2);margin-left: 10px;cursor: pointer;color: #ff5859"  v-if="resize" @click="cancel">取消修改</div>
+          <div style="width: 80px;height: 24px;border-radius: 3px;display: flex;align-items: center;justify-content: center;font-size: 13px;border: 1px solid rgba(255,88,89,0.2);margin-left: 10px;cursor: pointer;color: #ff5859" v-if="!resize" @click="exit">退出登录</div>
         </div>
       </div>
       <div class="top_box_c2"></div>

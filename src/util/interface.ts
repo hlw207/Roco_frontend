@@ -23,4 +23,11 @@ interface manaGenie{
     extra: string
 }
 
-export {type genieChoose, type genieSimple, type genie, type manaGenie}
+interface game{
+    id: number,
+    description: string,
+    round: number,
+    banNums: number[]
+}
+
+export {type genieChoose, type genieSimple, type genie, type manaGenie, type game}
