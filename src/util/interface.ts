@@ -30,4 +30,21 @@ interface game{
     banNums: number[]
 }
 
-export {type genieChoose, type genieSimple, type genie, type manaGenie, type game}
+interface userInfo{
+    account: string,
+    name: string,
+    password: string
+}
+
+interface recommendInfo{
+    id: number
+    type: string,
+    user: string,
+    date: Date,
+    manaGenieList?: manaGenie[]
+    genieList?: genie[],
+    comment: string,
+    praise: number
+}
+
+export {type genieChoose, type genieSimple, type genie, type manaGenie, type game, type userInfo, type recommendInfo}

@@ -14,7 +14,7 @@ const pages = ref([
   {name: '主页', path: '/'}
   ,{name: '图鉴', path: '/dictionary'}
   ,{name: '规则', path: '/rule'}
-  ,{name: '社区', path: '/'}
+  ,{name: '社区', path: '/community'}
   ,{name: '选宠', path: '/bp'}
   ,{name: '比赛', path: '/'}
   ,{name: '我的', path: '/home'}
