@@ -1,120 +1,88 @@
-<script setup lang="ts">
-import {onMounted, ref} from "vue";
-import router from "@/router";
-import {useBPInfoStore} from "@/pages/bp/bpInfo";
-import {useManaInfoStore} from "@/pages/mana/manaInfo";
-
-const height = window.innerHeight
-
-const group = ref('../public/group.png')
-const page = ref('../public/page.png')
-
-const update = ref([
-  {info: '魔力值更新', date: '10-17'},
-  {info: '图鉴更新', date: '10-16'},
-  {info: '规则更新', date: '10-15'},
-  {info: '主页更新', date: '10-14'},
-  {info: 'bp构建', date: '09-23'},
-])
-
-const anchers = ref([
-  {pic: '../public/ancher1.jpg', name: '元让家的里奥', url: 'https://space.bilibili.com/365973682'},
-  {pic: '../public/ancher2.jpg', name: '洛克王国理想', url: 'https://space.bilibili.com/178826226'},
-  {pic: '../public/ancher3.jpg', name: '洛克王国陈宥乐', url: 'https://space.bilibili.com/103824767'},
-  {pic: '../public/ancher4.jpg', name: '江玄（洛克王国）', url: 'https://www.douyin.com/user/MS4wLjABAAAA7eI_AapbbqFN0W1iwsN-2kl1-oMjP40sTiHsNHGvAyc?from_tab_name=main'},
-  {pic: '../public/teamB.png', name: '91花瓶专用号', url: 'https://www.douyin.com/user/MS4wLjABAAAACH2Z7huWPLbJGRrejW6abBBrtg3mggc_h4Gv1F_boNtwbtUpNF0OKPmkIUoBJr3L?from_tab_name=main'},
-
-])
-
-const routerOut = (path: string) =>{
-  window.open(path, '_blank');}
-
-onMounted(()=>{
-  // useManaInfoStore().clear()
-})
-</script>
-
-<route lang="yaml">
-  meta:
-    layout: home
-</route>
-
 <template>
-  <div class="top">
-    <div class="top_box">
-      <div class="top_box_c1"></div>
-      <div class="top_box_c2"></div>
-      <div class="top_box_main">
-        <div style="width: 24%;display: flex;flex-direction: column;align-items: center">
-          <div style="width: 80%;background: white;margin-top: 30px;border-radius: 15px;display: flex;flex-direction: column;align-items: center;padding-bottom: 10px">
-            <Title name="最近更新"/>
-            <el-scrollbar style="margin-top: 2px;max-height: 152px;width: 100%;">
-              <div style="display: flex;flex-direction: column;align-items: center;">
-                <template v-for="(up, index) in update">
-                  <div style="display: flex;width: 85%;align-items: center;margin: 8px;">
-                    <UpdateTag :choose="index"></UpdateTag>
-                    <div style="font-size: 12px;margin-left: 10px">{{up.info}}</div>
-                    <div style="display: flex;justify-content: right;flex: 1;font-size: 12px;color: grey;">
-                      {{up.date}}
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </el-scrollbar>
-          </div>
-
-          <div style="width: 80%;background: white;margin-top: 30px;;border-radius: 15px;display: flex;flex-direction: column;align-items: center;padding-bottom: 15px">
-            <Title name="关于网站"/>
-            <div style="font-size: 13px;width: 90%;margin-top: 5px">
-              欢迎来到洛克王国花瓶PK大家族！
-              <br />
-              <br />
-              平时野战PK常驻<span style="color: #69c0ff">91区</span>，也会举办各种新人、进阶比赛。
-              花瓶PK花样不断，<span style="color: #69c0ff">关闭透视</span>增加体验。详细规则见规则详情页。
-              <br />
-              <br />
-              网站由混饭人、江玄、泪水、哆啦等群友共同制作，创造良好PK环境，交流加群<span style="color: #69c0ff">772848760</span>
-            </div>
-          </div>
-        </div>
-        <div style="width: 54%;display: flex;flex-direction: column;align-items: center">
-          <div style="width: 90%;margin-top: 30px">
-            <img :src="page" style="width: 100%">
-          </div>
-        </div>
-
-        <div style="width: 22%;display: flex;flex-direction: column;align-items: center">
-          <div style="width: 80%;background: white;margin-top: 30px;;border-radius: 15px;display: flex;flex-direction: column;align-items: center;padding-bottom: 10px">
-            <Title name="主播推荐"/>
-            <template v-for="ancher in anchers">
-              <div style="display: flex;align-items: center;width: 90%;margin-left: 25%">
-                <div style="display: flex;align-items: center;justify-content: center;height: 24px;width: 24px;overflow: hidden;border-radius: 12px">
-                  <img :src="ancher.pic" style="height: 24px;">
-                </div>
-                <div class="ancher" @click="routerOut(ancher.url)">{{ancher.name}}</div>
-              </div>
-            </template>
-          </div>
-          <div style="width: 80%;background: white;margin-top: 30px;;border-radius: 15px;display: flex;flex-direction: column;align-items: center">
-            <Title name="交流加群"/>
-            <img :src="group" style="width: 90%;margin-bottom: 10px">
-          </div>
-        </div>
-      </div>
-      <div class="top_box_c2"></div>
-      <div class="top_box_c1"></div>
+  <div id="app">
+    <div
+        class="text-container"
+        @contextmenu.prevent="showPopup"
+        @click="hidePopup"
+        @mouseup="updateSelection"
+    >
+      {{ text }}
+    </div>
+    <div v-if="isPopupVisible" class="popup" :style="popupStyle">
+      <p>You selected: {{ selectedText }}</p>
+      <button @click="closePopup">Close</button>
     </div>
   </div>
 </template>
 
-<style scoped>
-.ancher{
-  margin: 8px 0 8px 10px;
-  font-size: 13px;
-  cursor: pointer;
+<script>
+import {request} from "@/util/request.ts";
+
+export default {
+  data() {
+    return {
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      isPopupVisible: false,
+      selectedText: "",
+      popupStyle: {
+        top: "0",
+        left: "0",
+      },
+    };
+  },
+  methods: {
+    updateSelection(event) {
+      const selectedText = window.getSelection().toString().trim();
+      if (selectedText) {
+        this.selectedText = selectedText;
+      }
+    },
+    showPopup(event) {
+      // 防止默认的右键菜单出现
+      event.preventDefault();
+      // 显示弹窗，并设置位置
+      this.isPopupVisible = true;
+      this.popupStyle.top = `${event.clientY}px`;
+      this.popupStyle.left = `${event.clientX}px`;
+    },
+    hidePopup() {
+      // 点击文本容器时，如果已经选中文本，不关闭弹窗
+      if (window.getSelection().toString().trim() !== "") return;
+      this.isPopupVisible = false;
+    },
+    closePopup() {
+      this.isPopupVisible = false;
+    },
+  },
+  mounted() {
+    request({
+      url: '/genie/attribute',
+      method: 'GET',
+      params:{
+        attribute: '冰'
+      }
+    }).then((res)=>{
+      console.log(res)
+    })
+  }
+};
+</script>
+
+<style>
+.text-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  user-select: text;
+  cursor: context-menu; /* 提示用户可以右键操作 */
 }
 
-.ancher:hover{
-  color: #69c0ff;
+.popup {
+  position: absolute;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 </style>

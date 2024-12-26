@@ -16,12 +16,12 @@ export default defineConfig({
       dirs: 'src/pages',  // 需要生成路由的文件目录
       exclude: ['**/components/*.vue'],  // 排除在外的目录，即不将所有 components 目录下的 .vue 文件生成路由
       extendRoute(route) {
-        // if (route.path === '/') {
-        //   return {
-        //     ...route,
-        //     redirect: '/bp'
-        //   }
-        // }
+        if (route.path === '/') {
+          return {
+            ...route,
+            redirect: '/writer/main'
+          }
+        }
       }
     }),
     Layouts({
@@ -45,9 +45,17 @@ export default defineConfig({
   ],
   server: {
     port: 5174,//端口号
-    host: true,//ip地址 或 '0.0.0.0' 或 "loaclhost"
+    host: true,//ip地址 或 '0.0.0.0' 或 "loaclhost",
     // open: false, //启动后是否自动打开浏览器
     // https: false, // 是否开启 https
+    proxy: {
+      '/api': {
+        // target: 'http://111.229.118.252:8080', // 目标服务器地址
+        target: 'http://172.19.178.181:8080', // 目标服务器地址
+        changeOrigin: true, // 是否改变请求源
+        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径
+      },
+    },
   },
   resolve: {
     alias: {

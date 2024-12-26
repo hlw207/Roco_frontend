@@ -1,50 +1,42 @@
-interface genieSimple{
-    genieName: string,
-    grade: number
+
+
+interface fiction{
+    id: bigint,
+    title: string,
+    coverUrl: string,
+    updateTime: string,
+    wordCount: string,
+    category: string
 }
 
-interface genieChoose{
-    attribute: string,
-    genieName: string
+interface chapter{
+    chapterId: bigint,
+    chapterTitle: string,
+    chapterStatus: string
 }
 
-interface genie{
-    attribute: string,
-    viceAttribute: string,
-    genieName: string,
-    grade: number
+interface writerHelper{
+    id: bigint,
+    description: string
 }
 
-interface manaGenie{
-    attribute: string,
-    viceAttribute: string,
-    genieName: string,
-    grade: number,
-    extra: string
-}
-
-interface game{
-    id: number,
-    description: string,
-    round: number,
-    banNums: number[]
-}
-
-interface userInfo{
-    account: string,
+interface role{
     name: string,
-    password: string
+    description: string,
+    updateTime: string
 }
 
-interface recommendInfo{
-    id: number
-    type: string,
-    user: string,
-    date: Date,
-    manaGenieList?: manaGenie[]
-    genieList?: genie[],
-    comment: string,
-    praise: number
+interface writerHelperDetail{
+    id: bigint,
+    novelId: bigint,
+    backgroundDescription: string,
+    outlineDescription: string,
+    characterList: role[]
 }
 
-export {type genieChoose, type genieSimple, type genie, type manaGenie, type game, type userInfo, type recommendInfo}
+interface outline{
+    outlineId: 0,
+    title: string
+}
+
+export {type fiction, type chapter, type writerHelper, type role, type writerHelperDetail, type outline}

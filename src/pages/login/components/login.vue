@@ -2,7 +2,7 @@
 import {computed, ref} from "vue";
 import {useLoginInfoStore} from "@/pages/login/loginInfo";
 
-const logo = ref('../../../public/teamB.png')
+const logo = ref('../../../public/logo.png')
 const click = ref(false)
 const login = useLoginInfoStore()
 
@@ -14,12 +14,13 @@ const ifNext = computed(()=>{
   // // 正则表达式匹配邮箱号
   // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   // 正则表达式匹配以"prism"开头的账号
-  const prismAccountPattern = /^Roco.*/;
-  if(prismAccountPattern.test(account.value)) {
-    click.value = false
-    return true
-  }
-  return false
+  // const prismAccountPattern = /^Roco.*/;
+  // if(prismAccountPattern.test(account.value)) {
+  //   click.value = false
+  //   return true
+  // }
+  // return false
+  return true
 })
 
 const change = () =>{
@@ -40,16 +41,16 @@ const changeType = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        91 Roco
+        执笔小说
       </div>
     </div>
     <div class="loginLogin">登录</div>
-    <div class="loginTip">继续Roco</div>
+    <div class="loginTip">继续</div>
     <div style="height: 20px">
     </div>
-    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Roco账号</div>
+    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的执笔账号</div>
     <div class="loginInput">
-      <input v-model="account" class="inputInput" placeholder="Roco账号">
+      <input v-model="account" class="inputInput" placeholder="执笔账号 / 手机号">
     </div>
     <div class="loginRegister">
       没有账户？

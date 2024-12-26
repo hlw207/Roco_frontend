@@ -4,6 +4,12 @@ body{
   margin: 0;
 }
 
+
+::selection {
+  background-color: #c6d6f1; /* 替换为你想要的颜色 */
+  /*color: #c6d6f1;*/
+}
+
 .top{
   display: flex;
   justify-content: center;

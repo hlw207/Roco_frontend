@@ -6,7 +6,9 @@ import {request} from "@/util/request";
 import {ElMessage} from "element-plus";
 import {useLoginInfoStore} from "@/pages/login/loginInfo";
 import {useUserInfoStore} from "@/stores/user";
+import { useCookies } from "vue3-cookies";
 
+const { cookies } = useCookies();
 const login = useLoginInfoStore()
 const user = useUserInfoStore()
 
@@ -14,7 +16,7 @@ const blank = ref(false)
 const wrong = ref(false)
 
 const password = ref('')
-const logo = ref('../../../public/teamB.png')
+const logo = ref('../../../public/logo.png')
 
 const back = () =>{
   login.order = 0
@@ -27,36 +29,30 @@ const change = () =>{
     return
   }
   request({
-    url: '/user/login',
-    method: 'GET',
-    params: {
-      account: login.account,
-      password: password.value
+    url: '/v1/user/login',
+    method: 'POST',
+    data: {
+      username: login.account,
+      password: password.value,
+      flag: 0
     }
   }).then((res)=>{
     console.log(res)
-    if(res.data) {
+    if(res.data.code == 0) {
       ElMessage.success("登录成功")
       user.id = login.account
-      // user.name
-      request({
-        url: '/user/getName',
-        method: 'GET',
-        params:{
-          account: login.account
-        }
-      }).then((res)=>{
-        user.name = res.data
-      })
+      user.name = login.account
+      user.token = res.data.data.token
+      // user.setCookie('satoken', user.token, 7);      // user.name
+      cookies.set('satoken', user.token, 100000)
+      console.log(user.token)
       router.push('/')
     }
     else {
-      ElMessage.warning('账号或密码错误')
+      ElMessage.warning(res.data.msg)
       blank.value = false
       wrong.value = true
     }
-  }).catch((err)=>{
-    ElMessage.warning('登录错误')
   })
 }
 
@@ -69,7 +65,7 @@ const changeType = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        91 Roco
+        执笔小说
       </div>
     </div>
     <div class="loginBack">
@@ -79,8 +75,8 @@ const changeType = () =>{
       {{login.account}}
     </div>
     <div class="loginLogin">输入密码</div>
-    <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">请输入Roco账户的密码</div>
-    <div v-if="wrong" style="color: red;font-size: 15px;margin-top: 10px;">Roco账户密码错误</div>
+    <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">请输入执笔账户的密码</div>
+    <div v-if="wrong" style="color: red;font-size: 15px;margin-top: 10px;">执笔账户密码错误</div>
     <div class="loginInput">
       <input class="inputInput" type="password" v-model="password" placeholder="密码">
     </div>

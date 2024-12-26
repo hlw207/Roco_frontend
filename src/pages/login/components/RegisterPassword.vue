@@ -13,10 +13,15 @@ const wrong = ref(false)
 
 const login = useLoginInfoStore()
 const user = useUserInfoStore()
+const verificationCode = ref('')
+const username = ref('')
 const password = ref('')
 const passwordCertain = ref('')
-const logo = ref('../../../public/teamB.png')
+const logo = ref('../../../public/logo.png')
 
+const ifVerification = ref(true)
+const second = ref(20)
+const timer = ref()
 const back = () =>{
   login.order = 0
 }
@@ -31,32 +36,45 @@ const change = () =>{
     password.value = ''
   }else {
     request({
-      url: '/user/register',
-      method: 'GET',
-      params: {
-        account: login.account,
+      url: '/v1/user/register',
+      method: 'post',
+      data: {
+        username: username.value,
         password: password.value,
+        phoneNumber: login.account,
+        verificationCode: verificationCode.value
       }
     }).then((res)=>{
       console.log(res)
-      if(res.data) {
+      if(res.data.code == 0) {
         ElMessage.success("注册成功")
-        user.id = login.account
-        request({
-          url: '/user/getName',
-          method: 'GET',
-          params:{
-            account: login.account
-          }
-        }).then((res)=>{
-          user.name = res.data
-        })
-        router.push('/')
+        ElMessage.success("请前去登录")
       }else {
-        ElMessage.warning("注册失败")
+        ElMessage.warning(res.data.msg)
       }
     })
   }
+}
+
+const getVerification = () =>{
+  ifVerification.value = false
+  request({
+    url: '/v1/user/send',
+    method: 'get',
+    params: {
+      phone: login.account
+    }
+  }).then((res)=>{
+    ElMessage.success('已发送到' + login.account + ',请注意查收')
+  })
+  timer.value = setInterval(()=>{
+    second.value--
+    if(second.value == 0) {
+      clearInterval(timer.value)
+      ifVerification.value = true
+      second.value = 20
+    }
+  },1000)
 }
 
 </script>
@@ -66,7 +84,7 @@ const change = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        91 Roco
+        执笔小说
       </div>
     </div>
     <div class="loginBack">
@@ -78,7 +96,18 @@ const change = () =>{
     <div class="loginLogin">输入密码</div>
     <div v-if="blank" style="color: red;font-size: 15px;margin-top: 10px;">密码不能为空</div>
     <div v-if="wrong" style="color: red;font-size: 15px;margin-top: 10px;">两次输入密码应一致</div>
-    <div class="loginInput">
+    <div class="loginInput" style="display: flex;align-items: center">
+      <input class="inputInput" type="password" v-model="verificationCode" placeholder="验证码" style="width: 80%">
+      <div style="display: flex;flex: 1;justify-content: right">
+        <div style="font-size: 13px;color: #40a9ff;cursor: pointer" @click="getVerification" v-if="ifVerification">获取验证码</div>
+        <div style="font-size: 13px;color: #a4a4a4;cursor: pointer" v-if="!ifVerification">{{second}}s后获取</div>
+
+      </div>
+    </div>
+    <div class="loginInput" style="margin-top: 20px">
+      <input class="inputInput" type="password" v-model="username" placeholder="用户名">
+    </div>
+    <div class="loginInput" style="margin-top: 20px">
       <input class="inputInput" type="password" v-model="password" placeholder="密码">
     </div>
     <div class="loginInput" style="margin-top: 20px">

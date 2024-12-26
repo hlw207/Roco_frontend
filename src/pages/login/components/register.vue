@@ -5,21 +5,19 @@ import {useLoginInfoStore} from "@/pages/login/loginInfo";
 import {request} from "@/util/request";
 import {ElMessage} from "element-plus";
 
-const logo = ref('../../../public/teamB.png')
+const logo = ref('../../../public/logo.png')
 const login = useLoginInfoStore()
 
 const account = ref(login.account)
 const click = ref(false)
 
 const ifNext = computed(()=>{
-  // // 正则表达式匹配手机号
-  // const phonePattern = /^1[0-9]{10}$/;
+  // 正则表达式匹配手机号
+  const phonePattern = /^1[0-9]{10}$/;
   // // 正则表达式匹配邮箱号
   // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  // 正则表达式匹配以"prism"开头的账号
-  const prismAccountPattern = /^Roco.*/;
 
-  if(prismAccountPattern.test(account.value)) {
+  if(phonePattern.test(account.value)) {
     click.value = false
     return true
   }
@@ -28,24 +26,11 @@ const ifNext = computed(()=>{
 })
 
 const change = () =>{
-  request({
-    url: '/user/name',
-    method: 'get',
-    params:{
-      account: account.value
-    }
-  }).then((res)=>{
-    if(res.data){
-      ElMessage.warning("改用户名已存在")
-      account.value = login.account = ''
-    }else {
-      click.value = true
-      if(ifNext.value) {
-        login.account = account.value
-        login.order = 1
-      }
-    }
-  })
+  click.value = true
+  if(ifNext.value) {
+    login.account = account.value
+    login.order = 1
+  }
 }
 </script>
 
@@ -54,18 +39,18 @@ const change = () =>{
     <div class="loginLogo">
       <el-image :src="logo" class="loginPic"></el-image>
       <div class="loginTitle">
-        91 Roco
+        执笔小说
       </div>
     </div>
     <div class="loginLogin">注册账号</div>
     <div style="height: 20px">
     </div>
-    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的Roco账号</div>
+    <div style="color: red;font-size: 15px;margin-bottom: 10px" v-if="!ifNext && click">请输入有效的手机号</div>
     <div class="loginInput">
-      <input v-model="account" class="inputInput" placeholder="Roco账号">
+      <input v-model="account" class="inputInput" placeholder="请输入手机号">
     </div>
     <div class="loginRegister">
-      Roco账号以Roco开头，例：Roco91
+      请输入您的手机号
     </div>
     <div style="margin-top: 5px;font-size: 12px;color: rgb(0, 103, 184);cursor: pointer" @click="login.type = 0">
       已有账号？立即登录
