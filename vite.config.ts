@@ -50,8 +50,8 @@ export default defineConfig({
     // https: false, // 是否开启 https
     proxy: {
       '/api': {
-        // target: 'http://111.229.118.252:8080', // 目标服务器地址
-        target: 'http://172.19.178.181:8080', // 目标服务器地址
+        target: 'http://111.229.118.252:8080', // 目标服务器地址
+        // target: 'http://172.19.178.181:8080', // 目标服务器地址
         changeOrigin: true, // 是否改变请求源
         rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径
       },

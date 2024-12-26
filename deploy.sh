@@ -1,5 +1,5 @@
 #! /bin/bash
-name="roco_frontend"
+name="pickPenWeb_frontend"
 
 docker container stop ${name}
 docker rm ${name}
